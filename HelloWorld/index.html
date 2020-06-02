@@ -90,7 +90,7 @@
 </script> -->
 
 <!-- 组件的生命周期 -->
-<script type="text/babel">
+<!-- <script type="text/babel">
     class Hello extends React.Component {
         constructor(props) {
             console.log("构造函数：初始化阶段")
@@ -147,6 +147,58 @@
             console.log("组件加载或者数据更新")
             return <div>
                 <h1>Hello {this.state.name}</h1>
+                <p>年龄：{this.state.age}</p>
+                <p>擅长：{this.state.talent}</p>
+                <button onClick={this.updateUser}>按钮</button>
+            </div>
+        }
+    }
+    ReactDOM.render(<Hello name="xgp" age="19" talent="全栈" />, document.getElementById("app"))
+</script> -->
+
+<!-- 事件的处理 -->
+<script type="text/babel">
+    class Hello extends React.Component {
+        constructor(props) {
+            console.log("构造函数：初始化阶段")
+            //父组件React.Component的构造
+            super(props)
+
+            //初始化状态 定义一个state
+            this.state = {
+                name: props.name || "AX",
+                age: props.age || 20,
+                talent: props.talent || "JavaScript"
+            }
+            //下面的修改无效
+            // setTimeout(() => {
+            //     console.log('dd')
+            //     this.state = {}
+            // }, 3000)
+
+            //在初始化的时候绑定this给updateUser
+            // this.updateUser = this.updateUser.bind(this)
+        }
+        //注意updateUser是在此处是一个函数名称，而非类似vue的key值
+        //注意： updateUser(){} 此时的this是undefined 而非类中的this react实例
+        //解决方案：1.使用 updateUser=()=>{} 的形式来绑定this (建议使用)
+        //2.在初始化阶段使用 this.函数名.bind(this) 给updateUser绑定this
+        //3.在绑定方法的时候使用onClick={ ()=>{this.函数名()} }
+        //4.在绑定方法的时候直接使用onClick = {this.函数名().bind(this)}
+        updateUser= ()=>{
+            console.log(this)
+            // this.setState({
+            //     name: 'tim',
+            //     age: 32,
+            //     talent: "Python"
+            // })
+        }
+        //render 会在组件加载或者组件更新的时候自动调用
+        render() {
+            console.log("组件加载或者数据更新")
+            //注意jsx语法中class必须写作className 否则与js中的class关键字冲突 会导致出错
+            return <div>
+                <h1 className="red">Hello {this.state.name}</h1>
                 <p>年龄：{this.state.age}</p>
                 <p>擅长：{this.state.talent}</p>
                 <button onClick={this.updateUser}>按钮</button>
