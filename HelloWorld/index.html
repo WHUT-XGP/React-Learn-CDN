@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Demo</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./React/babel.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+
+<body>
+    <div id="app"></div>
+</body>
+<!-- hello world React -->
+<!-- <script type="text/babel">
+    //原创建方法：
+    let hello = React.createElement("h1",
+     {
+         className:'red',
+         name:'Jack'
+     }, "Hello World");
+    //使用ES6语法 (babel)
+    //JSX语法：
+    var name = "Jack"
+    var ele =  <h1 className="red" name="Jack">Hello，{name}</h1>
+    ReactDOM.render(
+       ele
+        // hello
+        , document.getElementById('app'));
+</script> -->
+
+
+<!-- 渲染规则 -->
+<!-- <script type="text/babel">
+    function tick() {
+        
+        var time = new Date().toLocaleTimeString();
+        // 同样必须有父亲
+        var ele = <div>
+            <h1 className="red" name="Jack">Hello,Jack</h1>
+            <h2>今天是{time}</h2>
+        </div>
+        ReactDOM.render(ele, document.getElementById('app'))
+    }
+    setInterval(tick, 1000);
+    //可以看到React只会更新改变的位置而不会去改变模型（html模板）
+</script> -->
+
+
+<!-- 组件和props -->
+<!-- <script type="text/babel">
+    // 函数式组件（无生命周期）
+
+    // function Hello() {
+    //     return <h1>hello</h1>
+    // }
+
+    // ReactDOM.render(<Hello />, document.getElementById('app')) //Hello
+    //函数式组件：不带生命周期
+    function Hello(props) {
+        return <div>
+            <h1>Hello {props.name}</h1>
+            <p>年龄：{props.age}</p>
+            <p>擅长:{props.talent} </p>
+        </div>
+    }
+
+    //创建HelloJack类别（继承自React.Component) 带生命周期
+    class HelloJack extends React.Component {
+        //render函数
+        render() {
+            // console.log(React.Component)
+            return <div>
+                <h1>Hello {this.props.name}</h1>
+                <p>年龄：{this.props.age}</p>
+                <p>擅长:{this.props.talent} </p>
+            </div>
+        }
+    }
+
+    ReactDOM.render(<HelloJack name="AX" age="20" talent="前端 Python" />,
+        document.getElementById("app"))
+// React.Component
+</script> -->
+
+<!-- 组件的生命周期 -->
+<script type="text/babel">
+    class Hello extends React.Component {
+        constructor(props) {
+            console.log("构造函数：初始化阶段")
+            //父组件React.Component的构造
+            super(props)
+
+            //初始化状态 定义一个state
+            this.state = {
+                name: props.name || "AX",
+                age: props.age || 20,
+                talent: props.talent || "JavaScript"
+            }
+            //下面的修改无效
+            // setTimeout(() => {
+            //     console.log('dd')
+            //     this.state = {}
+            // }, 3000)
+        }
+        //componentWillMount 生命周期 组件加载前： 一般在这个周期拉取ajax请求 以便于进行后面的数据渲染
+        // constructor->componentWillMount->render->componentDidMount
+        componentWillMount() {
+            console.log("这里是componentWillMount周期")
+        }
+        //componentDidMount 生命周期 组件已经被挂载之后
+        componentDidMount() {
+            console.log("这里是componentDidMount周期")
+        }
+        //定义方法：注意此处使用了this.setState方法 类似小程序的setData 
+        //也就是说类似vue中的实时刷新机制有区别 比如直接this.state.name ='xxx' 不会更新数据
+        //注意updateUser是在此处是一个函数名称，而非类似vue的key值
+        updateUser = () => {
+            console.log(this)
+            this.setState({
+                name: 'tim',
+                age: 32,
+                talent: "Python"
+            })
+        }
+        //数据发生变化后会触发生命周期函数：shouldComponentUpdate(){}
+        shouldComponentUpdate() {
+            console.log("数据是否需要更新")
+            return true
+        }
+        // 如上结果返回true后 会触发下一个生命周期函数：componentWillUpdate(){}
+        componentWillUpdate() {
+            console.log("数据即将更新")
+        }
+        //更新完成后 会触发componentDidUpdate(){}
+        componentDidUpdate() {
+            console.log("数据已经更新")
+        }
+        //render 会在组件加载或者组件更新的时候自动调用
+        render() {
+            console.log("组件加载或者数据更新")
+            return <div>
+                <h1>Hello {this.state.name}</h1>
+                <p>年龄：{this.state.age}</p>
+                <p>擅长：{this.state.talent}</p>
+                <button onClick={this.updateUser}>按钮</button>
+            </div>
+        }
+    }
+    ReactDOM.render(<Hello name="xgp" age="19" talent="全栈" />, document.getElementById("app"))
+</script>
+
+</html>
