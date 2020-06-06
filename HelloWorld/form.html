@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./React/babel.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<div id="app"></div>
+
+<body>
+    <script type="text/babel">
+
+        //函数组件 无生命周期 很简单
+        class TodoList extends React.Component {
+            constructor(props) {
+                //记住一定要super
+                super(props)
+            }
+            state = {
+                val: '',
+                list: []
+            }
+            handleAdd = () => {
+                const { val, list } = this.state
+                list.push(val);
+                this.setState({
+                    val: ''
+                });
+                this.setState({
+                    list
+                })
+            }
+            //通过原生onChange来绑定事件
+            handleInput = (event) => {
+                // 无法被预览
+                // console.log(event)
+                this.setState({
+                    val: event.target.value
+                })
+            }
+            render() {
+                const arr = this.state.list;
+                let listItem = []
+                //原生map方法 map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
+                arr.map((item, index) => {
+                    let li = <li key={index}>{item}</li>;
+                    listItem.push(li);
+                })
+                //清空一哈当前val
+                //render里面不能进行setState
+
+                return <div>
+                    <div>
+                        <input type="text" value={this.state.val} onChange={this.handleInput} />
+                        <button onClick={this.handleAdd}>添加</button>
+                    </div>
+                    <div>
+                        <ul>
+                            {listItem}
+                        </ul>
+                    </div>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<TodoList />, document.getElementById("app"))
+
+    </script>
+</body>
+
+</html>
