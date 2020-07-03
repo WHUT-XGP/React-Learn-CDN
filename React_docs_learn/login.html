@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./React/babel.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<div id="app"></div>
+
+<body>
+    <script type="text/babel">
+
+        //函数组件 无生命周期 很简单
+        function Login(props) {
+            return <button onClick={props.updateUser}>Login</button>
+        }
+
+        function Logout(props) {
+            return <button onClick={props.updateUser} >Logout</button>
+        }
+
+        class App extends React.Component {
+            constructor(props) {
+                //记住一定要super
+                super(props)
+                //设置初始状态
+                // this.setState({
+                //     name: props.name,
+                //     age: props.age,
+                //     talent: props.talent
+                // })
+            }
+
+            updateUser = () => {
+                this.setState({
+                    isLogin: !this.state.isLogin
+                })
+            }
+
+            state = {
+                isLogin: false
+            }
+            render() {
+                const { isLogin } = this.state;
+                // let button;
+                // if (!isLogin) {
+                //     button = <Login />
+                // } else {
+                //     button = <Logout />
+                // }
+                // 通过子组件触发父组件方法： props 相当于把方法分发给了子组件
+                return <div>
+                    <h1 className="red">Hello,{this.state.name}</h1>
+                    <p>年龄：{this.state.age}</p>
+                    <p>擅长：{this.state.talent}</p>
+                    {isLogin ? <Logout updateUser={this.updateUser} /> : <Login updateUser={this.updateUser} />}
+                    <button onClick={this.updateUser}>更新数据</button>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App talent="JS" name="AX" age="20" />, document.getElementById("app"))
+
+    </script>
+</body>
+
+</html>

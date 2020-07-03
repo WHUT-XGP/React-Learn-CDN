@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Demo</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./React/babel.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .big {
+            font-size: 180px;
+        }
+
+        .active {
+            border: 2px solid pink;
+        }
+    </style>
+
+<body>
+    <div id="app"></div>
+</body>
+<!-- <script type="text/babel">
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+    }
+    const user = {
+        firstName: 'ax',
+        lastName: 'xgp'
+    }
+    let arrayShow = []
+    for (let item = 0; item < 5; item++) {
+        let tempJSX = <li className="red">{item}</li>
+        arrayShow.push(tempJSX);
+    }
+    const element = (
+        <div>
+            <ul>
+                {arrayShow}
+            </ul>
+        </div>
+    );
+    ReactDOM.render(element, document.getElementById("app"))
+</script> -->
+<!-- <script type="text/babel">
+    function Tick() {
+        const element = (
+            <div className="red">
+                {new Date().toLocaleString()}
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById("app"));
+    }
+    Tick();
+    setInterval(Tick, 1000);
+</script> -->
+<!-- <script type="text/babel">
+    //  组件名称必须以大写字母开头   React 会将以小写字母开头的组件视为原生 DOM 标签
+    // function Welcome(props) { 
+    // return (<h1>Hello, { props.name}</h1>);
+    // }
+
+    class Welcome extends React.Component {
+        constructor(props) {
+            super(props)
+        }
+        render() {
+            return <h1>Hello world</h1>
+        }
+    }
+
+    ReactDOM.render(<Welcome name="AX" />, document.getElementById("app"));
+</script> -->
+<!-- <script type="text/babel">
+    // function Clock(props) {
+    //     return (
+    //         <div>
+    //             <h1>Hello,{props.name}</h1>
+    //             <h2>It is {props.date.toLocaleTimeString()}</h2>
+    //         </div>
+    //     );
+    // }
+    class Clock extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                date: new Date(),
+                current: 1
+            };
+        };
+        // 挂载： 首次将组件渲染进DOM里
+        // 生命周期函数/钩子
+        // 在挂载之前
+        componentWillMount() {
+            console.log("componentWillMount")
+            //wrong
+            // this.setState({
+            // current: this.state.current + this.props.name
+            // })
+            //correct
+            this.setState((state, props) => {
+                return {
+                    current: state.current + ' ' + props.name
+                }
+            })
+        }
+
+        // 在挂载之后
+        componentDidMount() {
+            console.log("componentDidMount")
+            this.timeID = setInterval(() => {
+                this.setState({
+                    date: new Date(),
+                })
+            }, 1000)
+        };
+        // 卸载页面
+        ComponentWillUnmount() {
+            clearInterval(this.timeID);
+        }
+        render() {
+            // console.error(new Date().toLocaleTimeString());
+            return (
+                <div>
+                    <h1>Hello,{this.props.name}</h1>
+                    <h2>It is {this.state.date.toLocaleTimeString()}</h2>
+                    <h3>test {this.state.current}</h3>
+                </div>
+            );
+        }
+    }
+
+    function App() {
+        return (
+            <div>
+                <Clock name="AX1" />
+                <Clock name="AX2" />
+                <Clock name="AX3" />
+            </div>
+        );
+    }
+    ReactDOM.render(<App />, document.getElementById("app"));
+</script> -->
+<script type="text/babel">
+    // 函数式事件处理
+    // function Link() {
+    //     let test = 1;
+    //     function handleClick(event) {
+    //         console.log(event);
+    //         // 尝试打印test 证明可以使用闭包外的变量
+    //         console.log(test); // 1 打印成功
+    //         // 用来阻止默认事件的触发
+    //         event.preventDefault();
+    //         alert("clicked a!")
+    //     };
+    //     return (
+    //         <div>
+    //             <a href="xgpax.top" onClick={handleClick}>aaaa</a>
+    //         </div>
+    //     );
+    // }
+
+    // class Link extends React.Component {
+    //     constructor(props) {
+    //         super(props);
+    //         // 给回调函数绑定this
+    //         // this.handleClick = this.handleClick.bind(this);
+    //     }
+    //     handleClick(event) {
+    //         //回调时候返回值应该是undefinded
+    //         console.log("不绑定this,进行回调函数的时候：")
+    //         console.log(this);
+    //         // console.log(event);
+    //         event.preventDefault();
+    //         alert("clicked a ");
+    //     };
+    //     render() {
+    //         // 非回调的时候
+    //         console.log("非回调，在类中：")
+    //         console.log(this);
+    //         return (
+    //             <div>
+    //                 <a href="xgpax.top" onClick={(event) => {
+    //                     this.handleClick(event);
+    //                 }
+    //                 }>aaaa</a>
+    //             </div>
+    //         );
+    //     }
+    // }
+    // ReactDOM.render(<Link />, document.getElementById("app"));
+    // let arrayShow = []
+    // for (let item = 0; item < 5; item++) {
+    //     let tempJSX = <li className="red" key={item}>{item}</li>
+    //     arrayShow.push(tempJSX);
+    // }
+    //其实上面的写法不优雅，一般会使用map来生成，可以改写成:let number =[1,2,3,4,5]; let arrayShow = number.map((number)=><li className="red">number</li>)的形式
+    let number = [1, 2, 3, 4, 5];
+    let arrayShow = number.map((number) =>
+        <li className="red" key={number}>{number}</li>
+    )
+    const element = (
+        <div>
+            <ul>
+                {arrayShow}
+            </ul>
+        </div>
+    );
+    ReactDOM.render(element, document.getElementById("app"))
+</script>
+
+</html>

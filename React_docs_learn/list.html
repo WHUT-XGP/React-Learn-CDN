@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./React/babel.min.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<div id="app"></div>
+
+<body>
+    <script type="text/babel">
+
+        //函数组件 无生命周期 很简单
+        class App extends React.Component {
+            constructor(props) {
+                //记住一定要super
+                super(props)
+            }
+            state = {
+                list: [
+                    {
+                        id:1,
+                        text:'JavaScript'
+                    },
+                    {
+                        id:2,
+                        text:'React nb!'
+                    },
+                    {
+                        id:3,
+                        text:'Vue nb!'
+                    },
+                    {
+                        id:4,
+                        text:'I want to learn React well!'
+                    },
+                    {
+                        id:5,
+                        text:'I want React be my best framework'
+                    },
+                ]
+            }
+            render() {
+                const arr = this.state.list;
+                let listItem = [];
+                //原生map方法 map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
+                arr.map(item => {
+                    let li = <li key={item.id}>{item.text}</li>;
+                    listItem.push(li);
+                })
+                console.log(listItem)
+                // JSX直接解析数组 
+                // “如果这个变量是一个数组，会自动展开所有元素。”
+                return <div>
+                    <ul>
+                        {listItem}
+                    </ul>
+                </div>
+            }
+        }
+
+        ReactDOM.render(<App />, document.getElementById("app"))
+
+    </script>
+</body>
+
+</html>
